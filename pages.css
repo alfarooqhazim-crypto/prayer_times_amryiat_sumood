@@ -1,0 +1,368 @@
+/* ============================================================
+   pages.css — أنماط الصفحات المعلوماتية
+   ============================================================ */
+
+/* حاوية الصفحة */
+.page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+}
+
+/* رأس الصفحة */
+.page-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.page-header .page-icon {
+    font-size: 56px;
+    color: #10b981;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.page-header h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    font-size: 15px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* بطاقات المحتوى */
+.content-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 20px;
+}
+
+.content-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #34d399;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 20px 0 10px;
+}
+
+.content-card p {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #cbd5e1;
+    margin-bottom: 14px;
+}
+
+.content-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+}
+
+.content-card ul li {
+    padding: 10px 0 10px 0;
+    padding-right: 32px;
+    position: relative;
+    color: #cbd5e1;
+    font-size: 15px;
+    line-height: 1.8;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.content-card ul li:last-child {
+    border-bottom: none;
+}
+
+.content-card ul li::before {
+    content: '✓';
+    position: absolute;
+    right: 0;
+    color: #10b981;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* جهات الاتصال */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.contact-item {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.contact-item:hover {
+    transform: translateY(-3px);
+    border-color: #10b981;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+}
+
+.contact-item .contact-icon {
+    font-size: 32px;
+    color: #10b981;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.contact-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 8px;
+}
+
+.contact-item a,
+.contact-item p {
+    font-size: 14px;
+    color: #34d399;
+    text-decoration: none;
+    word-break: break-all;
+    line-height: 1.6;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
+
+/* زر العودة */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #10b981;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    margin-top: 20px;
+}
+
+.back-btn:hover {
+    background: #059669;
+    transform: translateY(-2px);
+}
+
+/* التذييل المحدث */
+.site-footer {
+    background: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+    border-top: 1px solid rgba(16, 185, 129, 0.2);
+    padding: 40px 20px 24px;
+    margin-top: 60px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-about h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #f8fafc;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-about h3 i {
+    color: #10b981;
+    font-size: 22px;
+}
+
+.footer-about p {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.footer-about .footer-note {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #34d399;
+    line-height: 1.7;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #34d399;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-links ul,
+.footer-contact ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links ul li,
+.footer-contact ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-links a:hover {
+    color: #10b981;
+    transform: translateX(-4px);
+}
+
+.footer-links a i {
+    font-size: 10px;
+    color: #64748b;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.footer-contact li i {
+    color: #10b981;
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.footer-contact li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-contact li a:hover {
+    color: #10b981;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.footer-bottom .footer-version {
+    color: #475569;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+/* الجوال */
+@media (max-width: 768px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        text-align: center;
+    }
+
+    .footer-about h3,
+    .footer-links a {
+        justify-content: center;
+    }
+
+    .footer-contact li {
+        justify-content: center;
+        text-align: right;
+    }
+
+    .footer-links a:hover {
+        transform: translateY(-2px);
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-header .page-icon {
+        font-size: 44px;
+    }
+
+    .content-card {
+        padding: 20px;
+    }
+}
+
+/* الوضع الفاتح */
+html:not(.dark) .content-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .content-card h2 { color: #059669; }
+html:not(.dark) .content-card h3 { color: #0f172a; }
+html:not(.dark) .content-card p,
+html:not(.dark) .content-card ul li { color: #334155; }
+html:not(.dark) .page-header h1 { color: #0f172a; }
+html:not(.dark) .page-header p { color: #64748b; }
+html:not(.dark) .contact-item { background: #f8fafc; }
+html:not(.dark) .contact-item h4 { color: #0f172a; }
+html:not(.dark) .site-footer {
+    background: #f1f5f9;
+    border-top-color: #cbd5e1;
+}
+html:not(.dark) .footer-about h3 { color: #0f172a; }
+html:not(.dark) .footer-about p { color: #475569; }
+html:not(.dark) .footer-links a { color: #475569; }
+html:not(.dark) .footer-contact li { color: #475569; }
+html:not(.dark) .footer-bottom { color: #94a3b8; }

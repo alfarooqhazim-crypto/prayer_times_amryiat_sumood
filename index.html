@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>مواقيت الصلاة - مدينة عامرية الصمود وضواحيها</title>
+    <meta name="description" content="مواقيت الصلاة الدقيقة لمدينة عامرية الصمود وضواحيها - ديوان الوقف السني. يعمل بدون إنترنت.">
+    <meta name="theme-color" content="#10b981">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="مواقيت الصلاة">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#10b981">
+    <meta name="msapplication-TileImage" content="icons/icon-144.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: { 400:'#34d399',500:'#10b981',600:'#059669',700:'#047857',900:'#064e3b' },
+                        amber: { 400:'#fbbf24',500:'#f59e0b' },
+                        slate: { 800:'#1e293b',850:'#152033',900:'#0f172a',950:'#020617' }
+                    },
+                    fontFamily: { sans: ['Tajawal','Cairo','sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+	<link rel="stylesheet" href="css/pages.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
+
+    <!-- Offline Banner -->
+    <div id="offlineBanner">
+        <i class="fa-solid fa-wifi-slash"></i>
+        أنت غير متصل بالإنترنت — التطبيق يعمل من النسخة المحفوظة
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Install PWA Banner -->
+    <div id="installBanner">
+        <div class="install-banner-content">
+            <i class="fa-solid fa-download install-icon"></i>
+            <div class="install-text">
+                <div class="install-title">ثبّت التطبيق على جهازك</div>
+                <div class="install-subtitle">للوصول السريع والعمل بدون إنترنت</div>
+            </div>
+        </div>
+        <div class="install-actions">
+            <button id="installAcceptBtn" class="install-accept">تثبيت</button>
+            <button id="installDismissBtn" class="install-dismiss">✕</button>
+        </div>
+    </div>
+
+    <!-- iOS Install Hint -->
+    <div id="iosInstallHint">
+        <button class="close-hint" id="iosHintClose">✕</button>
+        <div class="ios-hint-title">📱 للتثبيت على iPhone / iPad</div>
+        <div>
+            افتح هذا الموقع في <b>Safari</b>، ثم اضغط زر المشاركة
+            <span class="share-icon">⬆️</span>
+            واختر <b>"إضافة إلى الشاشة الرئيسية"</b>.
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="no-print relative border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+
+                <!-- Logo & Title -->
+                <div class="flex items-center gap-3 text-center md:text-right">
+                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center shadow-lg shadow-emerald-500/20 text-white shrink-0">
+                        <i class="fa-solid font-bold text-xl md:text-2xl fa-mosque"></i>
+                    </div>
+                    <div>
+                        <div class="text-[10px] md:text-xs font-semibold text-emerald-400 tracking-wider">جمهورية العراق - ديوان الوقف السني</div>
+                        <h1 class="text-base sm:text-lg md:text-xl font-bold text-white font-cairo">مواقيت الصلاة - عامرية الصمود</h1>
+                    </div>
+                </div>
+
+                <!-- Header Info Panel -->
+                <div class="flex items-center gap-2 md:gap-3 flex-wrap justify-center">
+                    <button id="headerInstallBtn" class="header-install-btn">
+                        <i class="fa-solid fa-download"></i>
+                        <span class="hidden sm:inline">تثبيت</span>
+                    </button>
+
+                    <div class="flex items-center gap-2.5 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700/50 text-xs">
+                        <div class="text-emerald-400 text-base"><i class="fa-regular fa-calendar"></i></div>
+                        <div>
+                            <div id="hijriDate" class="font-semibold text-emerald-400 text-[11px]">---</div>
+                            <div id="todayDateStr" class="text-[10px] text-slate-400">---</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2.5 bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700/50 text-xs">
+                        <div class="text-emerald-400 text-base"><i class="fa-regular fa-clock"></i></div>
+                        <div>
+                            <div id="liveClock" class="font-mono font-bold text-amber-400 text-sm md:text-base">00:00:00</div>
+                            <div class="text-[10px] text-slate-400">الوقت المحلي</div>
+                        </div>
+                    </div>
+
+                    <button id="themeToggle" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 flex items-center justify-center text-amber-400 transition" title="تبديل الوضع">
+                        <i class="fa-solid fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-grow">
+
+        <!-- Print Header -->
+        <div class="print-header">
+            <h1 style="font-size: 20pt; font-weight: bold;">جمهورية العراق - ديوان الوقف السني</h1>
+            <h2 style="font-size: 16pt;">مواقيت الصلاة لمدينة عامرية الصمود وضواحيها</h2>
+            <h3 id="printMonthTitle" style="font-size: 14pt; color: #333;"></h3>
+        </div>
+
+        <!-- Hero Panel -->
+        <div class="no-print grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
+            <div class="lg:col-span-2 glass-card rounded-2xl p-5 md:p-6 relative overflow-hidden flex flex-col justify-between border-r-4 border-r-emerald-500">
+                <div class="absolute -left-10 -bottom-10 text-slate-800/40 text-9xl pointer-events-none select-none">
+                    <i class="fa-solid fa-kaaba"></i>
+                </div>
+
+                <div class="flex items-center justify-between mb-3 relative z-10">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        الصلاة القادمة
+                    </span>
+                    <span id="currentSelectedMonthLabel" class="text-xs text-slate-400 font-medium">--</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 relative z-10 my-2">
+                    <div>
+                        <h2 id="nextPrayerName" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white font-cairo">جاري الحساب...</h2>
+                        <p id="nextPrayerTime" class="text-emerald-400 font-mono text-base md:text-lg font-bold mt-1">--:--</p>
+                    </div>
+                    <div class="bg-slate-900/90 rounded-xl px-4 py-2.5 border border-slate-700/60 inline-block">
+                        <div class="text-[11px] text-slate-400 mb-0.5">متبقي على الآذان</div>
+                        <div id="countdownTimer" class="text-xl sm:text-2xl md:text-3xl font-mono font-extrabold text-amber-400 tracking-wider">00:00:00</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3 pt-3 border-t border-slate-700/50 relative z-10 text-center">
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-fajr">
+                        <div class="text-[11px] text-slate-400">الفجر</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-fajr">--:--</div>
+                    </div>
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-sunrise">
+                        <div class="text-[11px] text-slate-400">الشروق</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-sunrise">--:--</div>
+                    </div>
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-dhuhr">
+                        <div class="text-[11px] text-slate-400">الظهر</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-dhuhr">--:--</div>
+                    </div>
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-asr">
+                        <div class="text-[11px] text-slate-400">العصر</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-asr">--:--</div>
+                    </div>
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-maghrib">
+                        <div class="text-[11px] text-slate-400">المغرب</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-maghrib">--:--</div>
+                    </div>
+                    <div class="bg-slate-900/40 p-2 rounded-lg border border-slate-800 transition" id="strip-isha">
+                        <div class="text-[11px] text-slate-400">العشاء</div>
+                        <div class="font-mono text-sm font-bold text-slate-200 mt-0.5 val-time" id="val-isha">--:--</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Panel -->
+            <div class="glass-card rounded-2xl p-5 md:p-6 flex flex-col justify-between gap-4">
+                <div>
+                    <h3 class="text-base md:text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-400"></i>
+                        خيارات العرض والبحث
+                    </h3>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label for="daySearchInput" class="block text-xs font-semibold text-slate-400 mb-1">تحديد اليوم في الشهر</label>
+                            <div class="relative">
+                                <input type="number" id="daySearchInput" min="1" max="31" placeholder="أدخل رقم اليوم (مثال: 15)"
+                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition">
+                                <button id="clearSearchBtn" class="absolute left-3 top-2.5 text-slate-500 hover:text-slate-300 hidden">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button id="jumpTodayBtn" class="w-full bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 font-medium rounded-xl px-4 py-2.5 text-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            الانتقال إلى تاريخ اليوم
+                        </button>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">حجم الخط</label>
+                            <div class="flex items-center gap-2">
+                                <button id="fontDecBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl py-2 text-sm font-bold transition" title="تصغير">
+                                    <i class="fa-solid fa-a-minus"></i> أ-
+                                </button>
+                                <button id="fontResetBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl py-2 text-xs font-bold transition">افتراضي</button>
+                                <button id="fontIncBtn" class="flex-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl py-2 text-sm font-bold transition" title="تكبير">
+                                    <i class="fa-solid fa-a-plus"></i> أ+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 grid grid-cols-2 gap-2">
+                    <button id="enableNotificationsBtn" class="col-span-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 font-medium rounded-xl px-3 py-2.5 text-xs transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bell" id="notifIcon"></i>
+                        <span id="notifBtnText">تفعيل إشعارات الأذان</span>
+                    </button>
+                    <button id="printBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2.5 px-3 rounded-xl border border-slate-700 text-xs transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-print text-amber-400"></i>
+                        طباعة/PDF
+                    </button>
+                    <button id="csvBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-2.5 px-3 rounded-xl border border-slate-700 text-xs transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-file-csv text-emerald-400"></i>
+                        CSV
+                    </button>
+                    <button id="shareBtn" class="col-span-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 font-medium py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-base"></i>
+                        مشاركة مواقيت اليوم
+                    </button>
+                    <button id="installAppBtn" class="col-span-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 font-medium py-2.5 px-3 rounded-xl text-xs transition flex items-center justify-center gap-2" style="display:none;">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        تثبيت التطبيق
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prayer Tracker -->
+        <div class="no-print glass-card rounded-2xl p-4 md:p-5 mb-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
+                <h3 class="text-sm md:text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-check-circle text-emerald-400"></i>
+                    تتبع صلوات اليوم
+                    <span class="text-xs text-slate-400 font-normal mr-2" id="trackerDateLabel"></span>
+                </h3>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-400">التقدم:</span>
+                    <span id="trackerProgress" class="text-xs font-bold text-emerald-400">0/5</span>
+                    <button id="resetTrackerBtn" class="text-xs text-slate-500 hover:text-red-400 transition" title="إعادة تعيين">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-5 gap-2" id="trackerGrid"></div>
+            <div class="mt-3 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                <div id="trackerProgressBar" class="h-full bg-gradient-to-l from-emerald-500 to-teal-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Upcoming 7 Days -->
+        <div class="no-print mb-6">
+            <h3 class="text-base md:text-lg font-bold text-white mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-calendar-week text-emerald-400"></i>
+                مواقيت الأيام السبعة القادمة
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-3" id="upcomingDaysGrid"></div>
+        </div>
+
+        <!-- Month Navigation -->
+        <div class="no-print mb-6">
+            <div class="block md:hidden">
+                <label for="monthSelectDropdown" class="block text-xs font-bold text-slate-400 mb-2">اختر الشهر:</label>
+                <select id="monthSelectDropdown" class="w-full bg-slate-800 border border-slate-700 text-emerald-400 font-bold text-base rounded-xl p-3 focus:outline-none focus:border-emerald-500"></select>
+            </div>
+            <div class="hidden md:flex items-center gap-1.5 p-1.5 bg-slate-900/90 rounded-2xl border border-slate-800 overflow-x-auto" id="monthTabsContainer"></div>
+        </div>
+
+        <!-- Table -->
+        <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
+            <div class="px-4 md:px-6 py-3 md:py-4 bg-slate-800/50 border-b border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                    <h2 id="tableHeading" class="text-lg md:text-xl font-bold text-white font-cairo">جدول الشهر الأول - كانون الثاني</h2>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div id="monthMetaTag" class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-900 text-slate-400 border border-slate-700">31 يوماً</div>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-right border-collapse">
+                    <thead>
+                        <tr class="bg-slate-900/80 text-slate-400 text-xs sm:text-sm uppercase tracking-wider border-b border-slate-800">
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center w-12 md:w-16">اليوم</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">الفجر</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">الشروق</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">الظهر</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">العصر</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">المغرب</th>
+                            <th class="py-3 md:py-3.5 px-2 md:px-4 text-center">العشاء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prayerTableBody" class="divide-y divide-slate-800/60 text-sm font-medium"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="no-print site-footer">
+    <div class="footer-container">
+        <div class="footer-top">
+            <div class="footer-about">
+                <h3><i class="fa-solid fa-mosque"></i> مواقيت الصلاة - عامرية الصمود</h3>
+                <p>مواقيت الصلاة لمدينة عامرية الصمود وضواحيها</p>
+                <div class="footer-note">
+                    <i class="fa-solid fa-check-circle"></i>
+                    المواقيت على حسب المواقيت الصادرة من ديوان الوقف السني في القضاء
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>روابط سريعة</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fa-solid fa-chevron-left"></i> الرئيسية</a></li>
+                    <li><a href="about.html"><i class="fa-solid fa-chevron-left"></i> من نحن</a></li>
+                    <li><a href="contact.html"><i class="fa-solid fa-chevron-left"></i> تواصل معنا</a></li>
+                    <li><a href="privacy.html"><i class="fa-solid fa-chevron-left"></i> سياسة الخصوصية</a></li>
+                    <li><a href="terms.html"><i class="fa-solid fa-chevron-left"></i> شروط الاستخدام</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>معلومات التواصل</h4>
+                <ul>
+                    <li><i class="fa-solid fa-location-dot"></i> <span>قضاء عامرية الصمود - الأنبار - العراق</span></li>
+                    <li><i class="fa-solid fa-building-columns"></i> <span>مديرية الوقف السني في القضاء</span></li>
+                    <li><i class="fa-solid fa-envelope"></i> <a href="contact.html">نموذج التواصل</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>جمهورية العراق — رئاسة ديوان الوقف السني — مديرية الوقف السني في عامرية الصمود</div>
+            <div class="footer-version">الإصدار 2.0.0 — © 2025 جميع الحقوق محفوظة</div>
+            <p id="swStatus" style="margin-top:8px;color:#475569;font-size:11px;"></p>
+        </div>
+    </div>
+</footer>
+
+    <!-- App Entry Point -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

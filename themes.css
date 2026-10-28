@@ -1,0 +1,57 @@
+/* ============================================================
+   themes.css — الوضع الفاتح/الداكن
+   ============================================================ */
+
+/* Light theme overrides */
+html:not(.dark) body {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+html:not(.dark) .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+html:not(.dark) header {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) footer {
+    background: #e2e8f0 !important;
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+}
+
+html:not(.dark) .text-white { color: #0f172a !important; }
+html:not(.dark) .text-slate-300 { color: #334155 !important; }
+html:not(.dark) .text-slate-400 { color: #64748b !important; }
+html:not(.dark) .bg-slate-800 { background-color: #e2e8f0 !important; }
+html:not(.dark) .bg-slate-900\/80 { background-color: rgba(241, 245, 249, 0.9) !important; }
+html:not(.dark) .bg-slate-900 { background-color: #f1f5f9 !important; }
+html:not(.dark) .border-slate-800 { border-color: #cbd5e1 !important; }
+html:not(.dark) .border-slate-700 { border-color: #cbd5e1 !important; }
+html:not(.dark) table thead tr { background: #e2e8f0 !important; }
+html:not(.dark) table tbody tr { color: #1e293b !important; }
+html:not(.dark) table tbody tr:hover { background: #f1f5f9 !important; }
+html:not(.dark) #liveClock { color: #b45309 !important; }
+html:not(.dark) #countdownTimer { color: #b45309 !important; }
+html:not(.dark) .val-time { color: #0f172a !important; }
+
+/* Theme-specific elements */
+html:not(.dark) #iosInstallHint {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+    border-color: #10b981;
+}
+
+html:not(.dark) #iosInstallHint .close-hint {
+    color: #64748b;
+}
+
+html:not(.dark) .share-icon {
+    background: #cbd5e1;
+    color: #0f172a;
+}
